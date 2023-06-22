@@ -1,14 +1,3 @@
-function getUserSelection () {
-  let goodInput = false;
-  let choices = new Set(["rock", "paper", "scissor"]);
-  while (!goodInput) {
-      var choice = prompt("Enter 'rock', 'paper', or 'scissor': ");
-      choice = choice.toLowerCase();
-      goodInput = choices.has(choice);
-  }
-  return choice;
-}
-
 function getComputerSelection () {
   let index = Math.floor(Math.random() * 3);
   let choices = new Array("rock", "paper", "scissor");
@@ -18,65 +7,80 @@ function getComputerSelection () {
 
 function checkWinner(playerSelection, computerSelection) {
   if (playerSelection == computerSelection) {
-    alert("DRAW: Computer picked " + computerSelection + ", you picked " + playerSelection);
     return 0;
   } else if (playerSelection == "rock" && computerSelection == "scissor") {
-    alert("WIN: Computer picked " + computerSelection + ", you picked " + playerSelection);
     return 1;
   } else if (playerSelection == "rock" && computerSelection == "paper") {
-    alert("LOSS: Computer picked " + computerSelection + ", you picked " + playerSelection);
     return -1;
   } else if (playerSelection == "paper" && computerSelection == "rock") {
-    alert("WIN: Computer picked " + computerSelection + ", you picked " + playerSelection);
     return 1;
   } else if (playerSelection == "paper" && computerSelection == "scissor") {
-    alert("LOSS: Computer picked " + computerSelection + ", you picked " + playerSelection);
     return -1;
   } else if (playerSelection == "scissor" && computerSelection == "paper") {
-    alert("WIN: Computer picked " + computerSelection + ", you picked " + playerSelection);
     return 1;
   } else if (playerSelection == "scissor" && computerSelection == "rock") {
-    alert("LOSS: Computer picked " + computerSelection + ", you picked " + playerSelection);
     return -1;
   }
 }
 
-var container = document.getElementById('container');
+function main() {
+  var count = 0;
+  var container = document.getElementById('container');
+  var buttons = new Array();
 
-var rockButton = document.createElement('button');
-rockButton.textContent = 'Rock';
-rockButton.addEventListener('click', function() {
-  playerSelection = 'rock';
-  console.log('Player selected: rock');
-  computerSelection = getComputerSelection();
-  console.log('computer selected' + computerSelection);
-  let x = checkWinner(playerSelection, computerSelection);
+  var rockButton = document.createElement('button');
+  rockButton.textContent = 'Rock';
 
-});
+  buttons.push(rockButton);
 
-// Create the paper button
-var paperButton = document.createElement('button');
-paperButton.textContent = 'Paper';
-rockButton.addEventListener('click', function() {
-  playerSelection = 'paper';
-  console.log('Player selected: rock');
-  computerSelection = getComputerSelection();
+  var paperButton = document.createElement('button');
+  paperButton.textContent = 'Paper';
 
-});
+  buttons.push(paperButton);
 
-// Create the scissors button
-var scissorsButton = document.createElement('button');
-scissorsButton.textContent = 'Scissors';
-rockButton.addEventListener('click', function() {
-  playerSelection = 'scissor';
-  console.log('Player selected: rock');
-  computerSelection = getComputerSelection();
+  var scissorButton = document.createElement('button');
+  scissorButton.textContent = 'Scissor';
 
-});
+  buttons.push(scissorButton)
 
-// Append the buttons to the container
-container.appendChild(rockButton);
-container.appendChild(paperButton);
-container.appendChild(scissorsButton);
+  buttons.forEach(button => button.addEventListener('click', function() {
+    playerSelection = button.textContent.toLowerCase();
+    computerSelection = getComputerSelection();
+    var x = checkWinner(playerSelection, computerSelection);
+    var resultText = document.createElement('p');
+    count += x;
+    if (x > 0) {
+      resultText.textContent = "You Win! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+    } else if (x < 0) {
+      resultText.textContent = "You Lose! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+    } else {
+      resultText.textContent = "You Draw! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+    }
 
+    if (count > 0) {
+      resultText.textContent += "You are in the lead by " + count + " games.\r\n";
+    } else if (count < 0) {
+      let temp = 0 - count;
+      resultText.textContent += "You are behind by " + temp + " games.\r\n";
+    } else {
+      resultText.textContent += "You are tied on games.\r\n";
+    }
+    if (count >= 5 || count <= -5) {
+      resultText.textContent += "GAME OVER!\r\n";
+      container.appendChild(resultText);
+      return;
+    }
+    container.appendChild(resultText);
+
+  }));
+
+
+
+  // Append the buttons to the container
+  container.appendChild(rockButton);
+  container.appendChild(paperButton);
+  container.appendChild(scissorButton);
+}
+
+main();
 
