@@ -46,7 +46,10 @@ function main() {
   var scissorButton = document.getElementById('scissors');
   var resultText = document.createElement('p');
   resultText.textContent = "Please select a button to start the game.  First to 5 wins is the winner.";
-  resultContainer.appendChild(resultText);
+
+  document.getElementById("result-container").innerHTML = "Please select a button to start the game.  First to 5 wins is the winner.";
+
+  // resultContainer.appendChild(resultText);
 
   var buttons = new Array();
 
@@ -63,30 +66,40 @@ function main() {
     console.log("Player picked " + playerSelection);
     var computerSelection = getComputerSelection();
     var x = checkWinner(playerSelection, computerSelection);
+    var results = '';
     count += x;
     if (x > 0) {
-      resultText.textContent = "You Win! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+      //resultText.textContent = "You Win! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+      results += "You Win! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
     } else if (x < 0) {
-      resultText.textContent = "You Lose! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+      //resultText.textContent = "You Lose! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+      results += "You Lose! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
     } else {
-      resultText.textContent = "You Draw! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+      //resultText.textContent = "You Draw! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
+      results += "You Draw! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
     }
 
     if (count > 0) {
-      resultText.textContent += "You are in the lead by " + count + " games.\r\n";
+      results += "You are in the lead by " + count + " games.\r\n";
     } else if (count < 0) {
       let temp = 0 - count;
-      resultText.textContent += "You are behind by " + temp + " games.\r\n";
+      results += "You are behind by " + temp + " games.\r\n";
     } else {
-      resultText.textContent += "You are tied on games.\r\n";
+      results += "You are tied on games.\r\n";
     }
-    resultContainer.appendChild(resultText);
+
+    //resultContainer.appendChild(resultText);
+    document.getElementById("result-container").innerHTML = results;
+
 
     if (count >= 5 || count <= -5) {
       gameOver(count);
       count = 0;
     }
-    resultContainer.appendChild(resultText);
+
+    //document.getElementById("result-container").innerHTML = resultText;
+
+    // resultContainer.appendChild(resultText);
 
 }));
 
