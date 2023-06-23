@@ -3,11 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>Page Title</title>
+  <style>
+    html, body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+    }
+
+    .result-container {
+      margin-left: 10%;
+      margin-right: 10%;
+      height: 25%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+    }
+
+    .result-text {
+      margin-top: 60px;
+      margin-bottom: 0;
+    }
+  </style>
 </head>
 <body>
-  <div id="container"></div>
+  <div id="container">
+    <div class="button-container">
+      <button id="rock">Rock</button>
+      <button id="paper">Paper</button>
+      <button id="scissors">Scissors</button>
+    </div>
+    <div class="result-container" id="result-container">
+      <p class="result-text"></p>
+    </div>
+  </div>
 
-
+  <script src="rps.js"></script>
 </body>
 </html>
-<script type="text/javascript" src='rps.js'> </script>

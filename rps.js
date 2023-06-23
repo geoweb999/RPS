@@ -23,31 +23,46 @@ function checkWinner(playerSelection, computerSelection) {
   }
 }
 
+function gameOver (count) {
+  var gameOverText = '';
+  if (count < 0) {
+    gameOverText = "Computer Wins!";
+  } else {
+    gameOverText = "You Win!";
+  }
+  alert(gameOverText);
+  var resultContainer = document.getElementById('result-container');
+  resultContainer.innerHTML = "";
+  main();
+}
+
 function main() {
   var count = 0;
   var container = document.getElementById('container');
+  var buttonContainer = document.getElementById('button-container');
+  var resultContainer = document.getElementById('result-container');
+  var rockButton = document.getElementById('rock');
+  var paperButton = document.getElementById('paper');
+  var scissorButton = document.getElementById('scissors');
+  var resultText = document.createElement('p');
+  resultText.textContent = "Please select a button to start the game.  First to 5 wins is the winner.";
+  resultContainer.appendChild(resultText);
+
   var buttons = new Array();
 
-  var rockButton = document.createElement('button');
   rockButton.textContent = 'Rock';
-
   buttons.push(rockButton);
-
-  var paperButton = document.createElement('button');
   paperButton.textContent = 'Paper';
-
   buttons.push(paperButton);
-
-  var scissorButton = document.createElement('button');
   scissorButton.textContent = 'Scissor';
-
   buttons.push(scissorButton)
 
   buttons.forEach(button => button.addEventListener('click', function() {
-    playerSelection = button.textContent.toLowerCase();
-    computerSelection = getComputerSelection();
+    
+    var playerSelection = button.textContent.toLowerCase();
+    console.log("Player picked " + playerSelection);
+    var computerSelection = getComputerSelection();
     var x = checkWinner(playerSelection, computerSelection);
-    var resultText = document.createElement('p');
     count += x;
     if (x > 0) {
       resultText.textContent = "You Win! Computer picked '" + computerSelection + "' and you picked '" + playerSelection + "'\r\n";
@@ -65,21 +80,17 @@ function main() {
     } else {
       resultText.textContent += "You are tied on games.\r\n";
     }
+    resultContainer.appendChild(resultText);
+
     if (count >= 5 || count <= -5) {
-      resultText.textContent += "GAME OVER!\r\n";
-      container.appendChild(resultText);
-      return;
+      gameOver(count);
+      count = 0;
     }
-    container.appendChild(resultText);
+    resultContainer.appendChild(resultText);
 
-  }));
+}));
 
 
-
-  // Append the buttons to the container
-  container.appendChild(rockButton);
-  container.appendChild(paperButton);
-  container.appendChild(scissorButton);
 }
 
 main();
